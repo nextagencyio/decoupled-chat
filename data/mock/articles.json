@@ -4,12 +4,12 @@
       "id": "1",
       "title": "Getting Started with Decoupled Drupal",
       "slug": "getting-started-decoupled-drupal",
-      "body": "Learn how to set up a decoupled Drupal architecture with Next.js frontend...",
+      "body": "<p>Decoupled Drupal, also known as headless Drupal, separates the content management backend from the frontend presentation layer. This architecture gives you the flexibility to use modern frontend frameworks like Next.js while leveraging Drupal's powerful content management capabilities.</p><h2>Why Go Decoupled?</h2><p>Traditional Drupal renders pages on the server using PHP and Twig templates. While this works well for many sites, decoupled architecture offers several advantages:</p><ul><li><strong>Modern Frontend Tools</strong> - Use React, Vue, or any framework you prefer</li><li><strong>Better Performance</strong> - Static generation and edge caching</li><li><strong>Improved Developer Experience</strong> - Familiar JavaScript tooling</li><li><strong>Omnichannel Delivery</strong> - Serve content to web, mobile, and IoT devices</li></ul><h2>Setting Up Your Stack</h2><p>To get started with decoupled Drupal:</p><ol><li>Create a Drupal space on decoupled.io</li><li>Configure your content types and fields</li><li>Set up your Next.js frontend</li><li>Connect via GraphQL API</li></ol><p>The GraphQL API provides a flexible, efficient way to query exactly the data you need for each page.</p>",
       "summary": "A comprehensive guide to building modern web applications with Drupal as a headless CMS and Next.js as the frontend framework.",
       "category": "Getting Started",
       "tags": ["drupal", "nextjs", "tutorial"],
       "image": {
-        "url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop",
+        "url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
         "alt": "Code on screen"
       },
       "readTime": "8 min read",
@@ -19,12 +19,12 @@
       "id": "2",
       "title": "GraphQL API Best Practices",
       "slug": "graphql-api-best-practices",
-      "body": "Discover the best practices for designing and consuming GraphQL APIs...",
+      "body": "<p>GraphQL has become the preferred way to build APIs for modern web applications. Unlike REST, GraphQL allows clients to request exactly the data they need in a single request, reducing over-fetching and under-fetching of data.</p><h2>Query Optimization</h2><p>When designing GraphQL queries, keep these best practices in mind:</p><ul><li><strong>Request Only What You Need</strong> - Don't fetch fields you won't use</li><li><strong>Use Fragments</strong> - Reuse common field selections across queries</li><li><strong>Batch Requests</strong> - Combine multiple queries when possible</li><li><strong>Implement Pagination</strong> - Never fetch unbounded lists</li></ul><h2>Caching Strategies</h2><p>Effective caching is crucial for GraphQL performance:</p><ol><li>Use Apollo Client's normalized cache</li><li>Implement field-level cache policies</li><li>Consider response caching at the edge</li><li>Use cache invalidation webhooks for real-time updates</li></ol><h2>Error Handling</h2><p>GraphQL errors are returned in a structured format. Always handle both network errors and GraphQL-specific errors in your client code.</p>",
       "summary": "Learn how to efficiently fetch data using GraphQL, including query optimization, caching strategies, and error handling.",
       "category": "API Development",
       "tags": ["graphql", "api", "performance"],
       "image": {
-        "url": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop",
+        "url": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=400&fit=crop",
         "alt": "API visualization"
       },
       "readTime": "6 min read",
@@ -34,12 +34,12 @@
       "id": "3",
       "title": "Building AI-Powered Search",
       "slug": "building-ai-powered-search",
-      "body": "Implement semantic search using vector embeddings and Pinecone...",
+      "body": "<p>Traditional keyword-based search often fails to understand the intent behind user queries. AI-powered semantic search uses vector embeddings to match meaning rather than just keywords, delivering more relevant results.</p><h2>How Vector Search Works</h2><p>Vector search converts text into numerical representations (embeddings) that capture semantic meaning:</p><ol><li>Content is processed through an embedding model</li><li>Embeddings are stored in a vector database</li><li>User queries are converted to embeddings</li><li>Similar vectors are found using cosine similarity</li></ol><h2>Implementing with Pinecone</h2><p>Pinecone is a managed vector database that makes it easy to add semantic search:</p><ul><li><strong>Index Your Content</strong> - Generate embeddings for all articles</li><li><strong>Query Efficiently</strong> - Fast similarity search at scale</li><li><strong>Filter Results</strong> - Combine vector search with metadata filters</li><li><strong>Real-time Updates</strong> - Keep your index in sync with content changes</li></ul><h2>Enhancing with LLMs</h2><p>Combine vector search with large language models for RAG (Retrieval Augmented Generation) to provide AI-powered answers grounded in your actual content.</p>",
       "summary": "A step-by-step guide to adding intelligent search capabilities to your application using AI embeddings and vector databases.",
       "category": "AI & Search",
       "tags": ["ai", "search", "pinecone", "embeddings"],
       "image": {
-        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&fit=crop",
+        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
         "alt": "AI visualization"
       },
       "readTime": "10 min read",
@@ -49,12 +49,12 @@
       "id": "4",
       "title": "Performance Optimization Tips",
       "slug": "performance-optimization-tips",
-      "body": "Optimize your Next.js application for maximum performance...",
+      "body": "<p>Page performance directly impacts user experience and SEO rankings. Next.js provides excellent built-in optimizations, but there are additional techniques to ensure your site loads as fast as possible.</p><h2>Image Optimization</h2><p>Images are often the largest assets on a page:</p><ul><li><strong>Use Next.js Image Component</strong> - Automatic optimization, lazy loading, and responsive sizes</li><li><strong>Choose the Right Format</strong> - WebP and AVIF offer better compression</li><li><strong>Implement Blur Placeholders</strong> - Improve perceived loading time</li><li><strong>Size Images Appropriately</strong> - Don't serve larger images than needed</li></ul><h2>Code Splitting</h2><p>Reduce initial bundle size by splitting your code:</p><ol><li>Use dynamic imports for heavy components</li><li>Lazy load below-the-fold content</li><li>Analyze your bundle with tools like @next/bundle-analyzer</li><li>Tree-shake unused code from dependencies</li></ol><h2>Caching & CDN</h2><p>Leverage caching at every layer: browser caching, CDN edge caching, and ISR (Incremental Static Regeneration) to serve content quickly while keeping it fresh.</p>",
       "summary": "Essential techniques for improving page load times, reducing bundle sizes, and implementing effective caching strategies.",
       "category": "Performance",
       "tags": ["performance", "optimization", "nextjs"],
       "image": {
-        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop",
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
         "alt": "Performance dashboard"
       },
       "readTime": "7 min read",

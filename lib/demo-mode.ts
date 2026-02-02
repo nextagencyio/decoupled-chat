@@ -31,6 +31,14 @@ export function getMockArticles(): Article[] {
 }
 
 /**
+ * Get a mock article by slug for demo mode
+ */
+export function getMockArticleBySlug(slug: string): Article | null {
+  const articles = getMockArticles()
+  return articles.find(a => a.slug === slug) || null
+}
+
+/**
  * Generate a demo mode chat response based on the user's message
  */
 export function generateDemoResponse(userMessage: string): { message: string; sources: Article[] } {
