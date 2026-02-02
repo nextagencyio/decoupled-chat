@@ -1,7 +1,6 @@
 {
-  "name": "decoupled-search",
-  "version": "1.0.0",
-  "description": "Full-text semantic search powered by Drupal and Pinecone",
+  "name": "decoupled-chat",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,24 +8,27 @@
     "start": "next start",
     "lint": "next lint",
     "setup": "tsx scripts/setup.ts",
-    "setup-content": "npx decoupled-cli@latest content import data/search-content.json",
+    "setup-content": "npx decoupled-cli@latest content import data/chat-content.json",
     "index": "tsx scripts/index-content.ts",
     "index:reset": "tsx scripts/index-content.ts --reset"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
     "@pinecone-database/pinecone": "^4.0.0",
+    "@tailwindcss/typography": "^0.5.19",
     "graphql": "^16.11.0",
+    "groq-sdk": "^0.8.0",
     "lucide-react": "^0.539.0",
     "next": "^16.1.6",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "autoprefixer": "^10.4.20",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "decoupled-cli": "^2.2.1",
     "eslint": "^9",
     "eslint-config-next": "^16.1.6",

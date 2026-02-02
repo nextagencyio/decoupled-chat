@@ -1,13 +1,14 @@
 #!/usr/bin/env tsx
 /**
- * Interactive setup script for Decoupled Search
+ * Interactive setup script for Decoupled Chat
  *
  * This script helps you:
  * 1. Authenticate with Decoupled.io CLI
  * 2. Create a new Drupal space
  * 3. Import sample content
- * 4. Configure Pinecone and OpenAI
- * 5. Index content in Pinecone
+ * 4. Configure Pinecone for semantic search
+ * 5. Configure Groq for AI chat
+ * 6. Index content in Pinecone
  */
 
 import * as fs from 'fs'
@@ -245,13 +246,13 @@ async function main() {
   console.log(`
 ${COLORS.cyan}╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║
-║   ${COLORS.bright}Decoupled Search Setup${COLORS.cyan}                                 ║
-║   ${COLORS.dim}AI-powered semantic search with Drupal + Pinecone${COLORS.cyan}       ║
+║   ${COLORS.bright}Decoupled Chat Setup${COLORS.cyan}                                   ║
+║   ${COLORS.dim}AI-powered chat with Drupal + Pinecone + Groq${COLORS.cyan}          ║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝${COLORS.reset}
 `)
 
-  const totalSteps = 6
+  const totalSteps = 7
   let currentStep = 1
 
   const envPath = path.join(process.cwd(), '.env.local')
@@ -292,7 +293,7 @@ ${COLORS.cyan}╔═════════════════════
   }
 
   if (!spaceUrl) {
-    const spaceName = await prompt('Space name', 'Knowledge Search')
+    const spaceName = await prompt('Space name', 'Knowledge Chat')
 
     log('\nCreating Drupal space...', 'dim')
 
@@ -326,7 +327,7 @@ ${COLORS.cyan}╔═════════════════════
   // Step 3: Import sample content
   logStep(currentStep++, totalSteps, 'Importing sample content')
 
-  const contentPath = path.join(process.cwd(), 'data', 'search-content.json')
+  const contentPath = path.join(process.cwd(), 'data', 'chat-content.json')
 
   if (fs.existsSync(contentPath) && spaceId) {
     log('Importing articles into Drupal...', 'dim')
@@ -381,7 +382,7 @@ Get a free API key at: ${COLORS.cyan}https://pinecone.io${COLORS.reset}
     logInfo('(Input is hidden for security)')
 
     const pineconeKey = await promptSecret('Pinecone API Key')
-    const pineconeIndex = await prompt('Pinecone Index Name', 'decoupled-search')
+    const pineconeIndex = await prompt('Pinecone Index Name', 'decoupled-chat')
 
     if (pineconeKey) envVars['PINECONE_API_KEY'] = pineconeKey
     if (pineconeIndex) envVars['PINECONE_INDEX'] = pineconeIndex
@@ -414,7 +415,33 @@ Get a free API key at: ${COLORS.cyan}https://pinecone.io${COLORS.reset}
     log('You can add the Pinecone API key later by editing .env.local', 'yellow')
   }
 
-  // Step 6: Complete
+  // Step 6: Configure Groq
+  logStep(currentStep++, totalSteps, 'Configuring Groq')
+
+  console.log(`
+${COLORS.yellow}To enable AI-powered chat, you need a Groq API key.${COLORS.reset}
+
+Groq provides ultra-fast inference for LLMs like Llama 4.
+Get a free API key at: ${COLORS.cyan}https://console.groq.com${COLORS.reset}
+`)
+
+  const configureGroq = await confirm('Configure Groq now?')
+
+  if (configureGroq) {
+    logInfo('(Input is hidden for security)')
+
+    const groqKey = await promptSecret('Groq API Key')
+
+    if (groqKey) {
+      envVars['GROQ_API_KEY'] = groqKey
+      writeEnvFile(envPath, envVars)
+      logSuccess('Groq configured')
+    }
+  } else {
+    log('You can add the Groq API key later by editing .env.local', 'yellow')
+  }
+
+  // Step 7: Complete
   logStep(currentStep++, totalSteps, 'Setup complete!')
 
   console.log(`
@@ -431,10 +458,10 @@ ${COLORS.bright}Next steps:${COLORS.reset}
 
 2. Open ${COLORS.cyan}http://localhost:3000${COLORS.reset} in your browser
 
-3. Try searching for topics like:
-   - "How to use TypeScript"
-   - "What is a vector database"
-   - "React best practices"
+3. Try asking questions like:
+   - "What topics do you cover?"
+   - "Explain TypeScript to me"
+   - "What are the latest articles?"
 
 ${COLORS.dim}Space ID: ${spaceId || 'existing'}${COLORS.reset}
 ${spaceUrl ? `${COLORS.dim}Drupal URL: ${spaceUrl}${COLORS.reset}` : ''}

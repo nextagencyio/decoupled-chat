@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Knowledge Search | Semantic Search Demo',
-  description: 'Search our knowledge base using AI-powered semantic search',
+  title: 'Decoupled Chat | AI-Powered Knowledge Assistant',
+  description: 'Chat with our AI assistant to explore and learn from our knowledge base',
 }
 
 export default function RootLayout({
@@ -16,10 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
-          {children}
-        </div>
+      <body className={`${inter.className} bg-gray-900`}>
+        {children}
       </body>
     </html>
   )

@@ -27,3 +27,21 @@ export interface SearchResponse {
   query: string
   totalResults: number
 }
+
+// Chat types
+export interface ChatMessage {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+  sources?: Article[]
+  createdAt: Date
+}
+
+export interface ChatRequest {
+  messages: { role: 'user' | 'assistant'; content: string }[]
+}
+
+export interface ChatResponse {
+  message: string
+  sources: Article[]
+}

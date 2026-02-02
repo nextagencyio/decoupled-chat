@@ -46,7 +46,7 @@ export async function generateQueryEmbedding(text: string): Promise<number[]> {
 
 export async function indexArticle(article: Article): Promise<void> {
   const pinecone = getPineconeClient()
-  const indexName = process.env.PINECONE_INDEX || 'decoupled-search'
+  const indexName = process.env.PINECONE_INDEX || 'decoupled-chat'
   const index = pinecone.index(indexName)
 
   // Create text for embedding: title + summary + body (stripped of HTML)
@@ -82,7 +82,7 @@ export async function searchArticles(
   topK: number = 10
 ): Promise<SearchResult[]> {
   const pinecone = getPineconeClient()
-  const indexName = process.env.PINECONE_INDEX || 'decoupled-search'
+  const indexName = process.env.PINECONE_INDEX || 'decoupled-chat'
   const index = pinecone.index(indexName)
 
   // Use query embedding (optimized for retrieval)
@@ -117,7 +117,7 @@ export async function searchArticles(
 
 export async function deleteArticle(articleId: string): Promise<void> {
   const pinecone = getPineconeClient()
-  const indexName = process.env.PINECONE_INDEX || 'decoupled-search'
+  const indexName = process.env.PINECONE_INDEX || 'decoupled-chat'
   const index = pinecone.index(indexName)
 
   await index.deleteOne(articleId)
@@ -125,7 +125,7 @@ export async function deleteArticle(articleId: string): Promise<void> {
 
 export async function clearIndex(): Promise<void> {
   const pinecone = getPineconeClient()
-  const indexName = process.env.PINECONE_INDEX || 'decoupled-search'
+  const indexName = process.env.PINECONE_INDEX || 'decoupled-chat'
   const index = pinecone.index(indexName)
 
   await index.deleteAll()
