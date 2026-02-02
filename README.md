@@ -179,13 +179,50 @@ Adjust search parameters in `lib/pinecone.ts`:
 └───────────────────┘         └───────────────────────────────┘
 ```
 
+## Demo Mode
+
+Demo mode allows you to showcase the application without connecting to Drupal, Pinecone, or Groq. It displays simulated chat responses with mock articles.
+
+### Enable Demo Mode
+
+Set the environment variable:
+
+```bash
+NEXT_PUBLIC_DEMO_MODE=true
+```
+
+Or add to `.env.local`:
+```
+NEXT_PUBLIC_DEMO_MODE=true
+```
+
+### What Demo Mode Does
+
+- Shows a "Demo Mode" banner at the top of the page
+- Returns simulated chat responses with helpful demo content
+- Displays mock articles in the sources sidebar (clickable)
+- Article detail pages show full mock content
+- No backend services required
+
+### Removing Demo Mode
+
+To convert to a production app with real data:
+
+1. Delete `lib/demo-mode.ts`
+2. Delete `data/mock/` directory
+3. Delete `app/components/DemoModeBanner.tsx`
+4. Remove `DemoModeBanner` from `app/layout.tsx`
+5. Remove demo mode checks from `app/api/chat/route.ts`
+6. Remove demo mode checks from `app/api/config/route.ts`
+7. Remove demo mode checks from `app/articles/[slug]/page.tsx`
+
 ## Deployment
 
 ### Vercel
 
 1. Push to GitHub
 2. Import in Vercel
-3. Add environment variables
+3. Add environment variables (or set `NEXT_PUBLIC_DEMO_MODE=true` for demo)
 4. Deploy
 
 ### Important Notes
