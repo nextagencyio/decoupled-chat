@@ -1,4 +1,4 @@
-import { Terminal, Key, Database, Sparkles } from 'lucide-react'
+import { Terminal, Key, Database } from 'lucide-react'
 
 export default function SetupGuide() {
   return (
@@ -11,7 +11,7 @@ export default function SetupGuide() {
           Setup Required
         </h1>
         <p className="text-slate-600 dark:text-slate-300">
-          Run the setup script to configure Drupal, Pinecone, and OpenAI.
+          Run the setup script to configure Drupal and Pinecone.
         </p>
       </div>
 
@@ -65,28 +65,16 @@ export default function SetupGuide() {
                   <a href="https://pinecone.io" className="text-sky-600 hover:underline" target="_blank" rel="noopener">
                     pinecone.io
                   </a>{' '}
-                  for vector search.
+                  for vector search and embeddings.
                 </p>
               </div>
             </div>
+          </div>
 
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <div>
-                <h4 className="font-medium text-slate-900 dark:text-white">
-                  OpenAI API Key
-                </h4>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Get an API key from{' '}
-                  <a href="https://platform.openai.com/api-keys" className="text-sky-600 hover:underline" target="_blank" rel="noopener">
-                    OpenAI
-                  </a>{' '}
-                  for generating embeddings.
-                </p>
-              </div>
-            </div>
+          <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
+            <p className="text-sm text-emerald-700 dark:text-emerald-300">
+              <strong>Good news!</strong> Pinecone includes built-in embeddings, so you only need one API key for both storage and AI embeddings.
+            </p>
           </div>
         </div>
       </div>

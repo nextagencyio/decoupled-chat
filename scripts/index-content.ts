@@ -4,16 +4,18 @@
  *
  * This script:
  * 1. Fetches all articles from Drupal via GraphQL
- * 2. Generates embeddings using OpenAI
+ * 2. Generates embeddings using Pinecone's built-in inference
  * 3. Stores vectors in Pinecone for semantic search
  */
 
 import { config } from 'dotenv'
 import { Pinecone } from '@pinecone-database/pinecone'
-import OpenAI from 'openai'
 
 // Load environment variables
 config({ path: '.env.local' })
+
+// Pinecone embedding model
+const EMBEDDING_MODEL = 'llama-text-embed-v2'
 
 const COLORS = {
   reset: '\x1b[0m',
@@ -160,13 +162,14 @@ async function fetchArticles(): Promise<Article[]> {
   }))
 }
 
-async function generateEmbedding(openai: OpenAI, text: string): Promise<number[]> {
-  const response = await openai.embeddings.create({
-    model: 'text-embedding-3-small',
-    input: text,
-  })
+async function generateEmbedding(pinecone: Pinecone, text: string): Promise<number[]> {
+  const response = await pinecone.inference.embed(
+    EMBEDDING_MODEL,
+    [text],
+    { inputType: 'passage', truncate: 'END' }
+  )
 
-  return response.data[0].embedding
+  return response.data[0].values as number[]
 }
 
 async function ensureIndexExists(pinecone: Pinecone, indexName: string): Promise<void> {
@@ -176,9 +179,10 @@ async function ensureIndexExists(pinecone: Pinecone, indexName: string): Promise
   if (!indexExists) {
     log(`Creating Pinecone index: ${indexName}`, 'cyan')
 
+    // llama-text-embed-v2 produces 1024-dimensional vectors
     await pinecone.createIndex({
       name: indexName,
-      dimension: 1536, // text-embedding-3-small dimension
+      dimension: 1024,
       metric: 'cosine',
       spec: {
         serverless: {
@@ -210,18 +214,9 @@ ${COLORS.cyan}╔═════════════════════
     process.exit(1)
   }
 
-  if (!process.env.OPENAI_API_KEY) {
-    logError('OPENAI_API_KEY not configured')
-    process.exit(1)
-  }
-
-  // Initialize clients
+  // Initialize Pinecone client
   const pinecone = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY,
-  })
-
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
   })
 
   const indexName = process.env.PINECONE_INDEX || 'decoupled-search'
@@ -242,7 +237,7 @@ ${COLORS.cyan}╔═════════════════════
     }
 
     // Index each article
-    log('\nIndexing articles...', 'dim')
+    log('\nIndexing articles (using Pinecone inference)...', 'dim')
 
     for (let i = 0; i < articles.length; i++) {
       const article = articles[i]
@@ -255,8 +250,8 @@ ${COLORS.cyan}╔═════════════════════
       const textToEmbed = `${article.title}\n\n${article.summary}\n\n${plainBody}`
       const truncatedText = textToEmbed.slice(0, 32000)
 
-      // Generate embedding
-      const embedding = await generateEmbedding(openai, truncatedText)
+      // Generate embedding using Pinecone's inference API
+      const embedding = await generateEmbedding(pinecone, truncatedText)
 
       // Upsert to Pinecone
       await index.upsert([
@@ -288,7 +283,7 @@ ${COLORS.cyan}╔═════════════════════
 ${COLORS.bright}Index Summary:${COLORS.reset}
 - Index name: ${indexName}
 - Articles indexed: ${articles.length}
-- Embedding model: text-embedding-3-small
+- Embedding model: ${EMBEDDING_MODEL} (Pinecone inference)
 
 ${COLORS.dim}You can now search using: npm run dev${COLORS.reset}
 `)

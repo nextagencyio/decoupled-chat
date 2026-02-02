@@ -1,9 +1,10 @@
 import { Pinecone } from '@pinecone-database/pinecone'
-import OpenAI from 'openai'
 import type { Article, SearchResult } from './types'
 
+// Pinecone embedding model - no OpenAI needed!
+const EMBEDDING_MODEL = 'llama-text-embed-v2'
+
 let pineconeClient: Pinecone | null = null
-let openaiClient: OpenAI | null = null
 
 export function getPineconeClient(): Pinecone {
   if (!pineconeClient) {
@@ -17,27 +18,30 @@ export function getPineconeClient(): Pinecone {
   return pineconeClient
 }
 
-export function getOpenAIClient(): OpenAI {
-  if (!openaiClient) {
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY environment variable is not set')
-    }
-    openaiClient = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    })
-  }
-  return openaiClient
+export async function generateEmbedding(text: string): Promise<number[]> {
+  const pinecone = getPineconeClient()
+
+  // Use Pinecone's built-in inference API
+  const response = await pinecone.inference.embed(
+    EMBEDDING_MODEL,
+    [text],
+    { inputType: 'passage', truncate: 'END' }
+  )
+
+  return response.data[0].values as number[]
 }
 
-export async function generateEmbedding(text: string): Promise<number[]> {
-  const openai = getOpenAIClient()
+export async function generateQueryEmbedding(text: string): Promise<number[]> {
+  const pinecone = getPineconeClient()
 
-  const response = await openai.embeddings.create({
-    model: 'text-embedding-3-small',
-    input: text,
-  })
+  // Use 'query' inputType for search queries (optimized for retrieval)
+  const response = await pinecone.inference.embed(
+    EMBEDDING_MODEL,
+    [text],
+    { inputType: 'query', truncate: 'END' }
+  )
 
-  return response.data[0].embedding
+  return response.data[0].values as number[]
 }
 
 export async function indexArticle(article: Article): Promise<void> {
@@ -49,7 +53,7 @@ export async function indexArticle(article: Article): Promise<void> {
   const plainBody = article.body.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
   const textToEmbed = `${article.title}\n\n${article.summary}\n\n${plainBody}`
 
-  // Truncate to ~8000 tokens (~32000 chars) to stay within embedding model limits
+  // Truncate to stay within model limits
   const truncatedText = textToEmbed.slice(0, 32000)
 
   const embedding = await generateEmbedding(truncatedText)
@@ -81,7 +85,8 @@ export async function searchArticles(
   const indexName = process.env.PINECONE_INDEX || 'decoupled-search'
   const index = pinecone.index(indexName)
 
-  const queryEmbedding = await generateEmbedding(query)
+  // Use query embedding (optimized for retrieval)
+  const queryEmbedding = await generateQueryEmbedding(query)
 
   const results = await index.query({
     vector: queryEmbedding,

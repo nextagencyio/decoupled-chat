@@ -1,6 +1,6 @@
 # Decoupled Search
 
-AI-powered semantic search built with Next.js, Drupal (via Decoupled.io), Pinecone, and OpenAI. Search your content using natural language queries that understand meaning, not just keywords.
+AI-powered semantic search built with Next.js, Drupal (via Decoupled.io), and Pinecone. Search your content using natural language queries that understand meaning, not just keywords.
 
 ## Features
 
@@ -8,12 +8,13 @@ AI-powered semantic search built with Next.js, Drupal (via Decoupled.io), Pineco
 - **Real-time Results**: Instant search as you type with debounced queries
 - **Relevance Scoring**: Results ranked by semantic similarity
 - **Decoupled Architecture**: Content managed in Drupal, search powered by Pinecone
+- **No OpenAI Required**: Uses Pinecone's built-in inference for embeddings
 - **Beautiful UI**: Clean, responsive interface with dark mode support
 
 ## How It Works
 
 1. **Content Storage**: Articles are stored and managed in Drupal (via Decoupled.io)
-2. **Embedding Generation**: Article content is converted to vector embeddings using OpenAI
+2. **Embedding Generation**: Article content is converted to vector embeddings using Pinecone's inference API
 3. **Vector Storage**: Embeddings are stored in Pinecone for fast similarity search
 4. **Semantic Queries**: User queries are embedded and matched against content vectors
 
@@ -24,7 +25,7 @@ AI-powered semantic search built with Next.js, Drupal (via Decoupled.io), Pineco
 The interactive setup script will guide you through:
 - Creating a Drupal space on Decoupled.io
 - Importing sample articles
-- Configuring Pinecone and OpenAI
+- Configuring Pinecone
 - Indexing content for search
 
 ```bash
@@ -48,14 +49,10 @@ You'll need accounts and API keys from:
 - Sign up at [decoupled.io](https://decoupled.io)
 - Authenticate via CLI: `npx decoupled-cli@latest auth login`
 
-### Pinecone (Vector Database)
+### Pinecone (Vector Database + Embeddings)
 - Sign up at [pinecone.io](https://pinecone.io)
 - Create a free account and get your API key
-- The setup script will create the index automatically
-
-### OpenAI (Embeddings)
-- Get an API key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-- Uses `text-embedding-3-small` model (~$0.02 per 1M tokens)
+- Pinecone provides both storage AND embeddings - no OpenAI needed!
 
 ## Environment Variables
 
@@ -66,7 +63,6 @@ You'll need accounts and API keys from:
 | `DRUPAL_CLIENT_SECRET` | OAuth client secret | Yes |
 | `PINECONE_API_KEY` | Pinecone API key | Yes |
 | `PINECONE_INDEX` | Pinecone index name | No (default: decoupled-search) |
-| `OPENAI_API_KEY` | OpenAI API key | Yes |
 
 ## Project Structure
 
@@ -89,7 +85,7 @@ decoupled-search/
 │   └── page.tsx             # Search homepage
 ├── lib/
 │   ├── apollo-client.ts     # GraphQL client
-│   ├── pinecone.ts          # Pinecone operations
+│   ├── pinecone.ts          # Pinecone operations + inference
 │   ├── queries.ts           # GraphQL queries
 │   └── types.ts             # TypeScript types
 ├── data/
@@ -133,7 +129,7 @@ The project uses Tailwind CSS with a sky/blue color scheme. Modify `tailwind.con
 
 Adjust search parameters in `lib/pinecone.ts`:
 - `topK`: Number of results to return (default: 10)
-- Embedding model: Change in `generateEmbedding` function
+- Embedding model: Uses `llama-text-embed-v2` via Pinecone inference
 
 ## Deployment
 
@@ -148,7 +144,7 @@ Adjust search parameters in `lib/pinecone.ts`:
 
 - Run `npm run index` after deploying to index content
 - Pinecone indexes persist - you don't need to re-index on every deploy
-- OpenAI costs are minimal for embeddings (~$0.02 per 1M tokens)
+- Pinecone's free tier includes inference API calls
 
 ## Architecture
 
@@ -163,27 +159,28 @@ Adjust search parameters in `lib/pinecone.ts`:
 │  ┌───────────────────────────────────────────────────────┐  │
 │  │                   /api/search                          │  │
 │  │  1. Receive query                                      │  │
-│  │  2. Generate embedding via OpenAI                      │  │
+│  │  2. Generate embedding via Pinecone inference          │  │
 │  │  3. Query Pinecone for similar vectors                 │  │
 │  │  4. Return ranked results                              │  │
 │  └───────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
                           │
-           ┌──────────────┴──────────────┐
-           │                             │
-           ▼                             ▼
-┌─────────────────────┐       ┌─────────────────────┐
-│      OpenAI         │       │      Pinecone       │
-│  text-embedding-3   │       │  Vector Database    │
-│  (1536 dimensions)  │       │  (Serverless)       │
-└─────────────────────┘       └─────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       Pinecone                               │
+│  ┌───────────────────┐    ┌───────────────────────────────┐ │
+│  │  Inference API    │    │     Vector Database           │ │
+│  │  (llama-text-     │───▶│     (Serverless)              │ │
+│  │   embed-v2)       │    │                               │ │
+│  └───────────────────┘    └───────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## Support
 
 - [Decoupled.io Documentation](https://decoupled.io/docs)
 - [Pinecone Documentation](https://docs.pinecone.io)
-- [OpenAI API Documentation](https://platform.openai.com/docs)
+- [Pinecone Inference Guide](https://docs.pinecone.io/guides/inference/understanding-inference)
 - [Next.js Documentation](https://nextjs.org/docs)
 
 ## License

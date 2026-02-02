@@ -363,37 +363,34 @@ ${COLORS.cyan}╔═════════════════════
     spaceUrl = envVars['NEXT_PUBLIC_DRUPAL_BASE_URL']
   }
 
-  // Step 5: Configure Pinecone and OpenAI
-  logStep(currentStep++, totalSteps, 'Configuring Pinecone and OpenAI')
+  // Step 5: Configure Pinecone
+  logStep(currentStep++, totalSteps, 'Configuring Pinecone')
 
   console.log(`
-${COLORS.yellow}To enable semantic search, you need API keys for:${COLORS.reset}
+${COLORS.yellow}To enable semantic search, you need a Pinecone API key.${COLORS.reset}
 
-1. ${COLORS.bright}Pinecone${COLORS.reset} - Vector database for search
-   Get a free API key at: ${COLORS.cyan}https://pinecone.io${COLORS.reset}
+Pinecone provides both the vector database AND built-in embeddings,
+so you only need one API key!
 
-2. ${COLORS.bright}OpenAI${COLORS.reset} - For generating text embeddings
-   Get an API key at: ${COLORS.cyan}https://platform.openai.com/api-keys${COLORS.reset}
+Get a free API key at: ${COLORS.cyan}https://pinecone.io${COLORS.reset}
 `)
 
-  const configurePinecone = await confirm('Configure Pinecone and OpenAI now?')
+  const configurePinecone = await confirm('Configure Pinecone now?')
 
   if (configurePinecone) {
     logInfo('(Input is hidden for security)')
 
     const pineconeKey = await promptSecret('Pinecone API Key')
-    const openaiKey = await promptSecret('OpenAI API Key')
     const pineconeIndex = await prompt('Pinecone Index Name', 'decoupled-search')
 
     if (pineconeKey) envVars['PINECONE_API_KEY'] = pineconeKey
-    if (openaiKey) envVars['OPENAI_API_KEY'] = openaiKey
     if (pineconeIndex) envVars['PINECONE_INDEX'] = pineconeIndex
 
     writeEnvFile(envPath, envVars)
-    logSuccess('API keys configured')
+    logSuccess('Pinecone configured')
 
     // Offer to create index and index content
-    if (pineconeKey && openaiKey) {
+    if (pineconeKey) {
       const shouldIndex = await confirm('Index content in Pinecone now?')
 
       if (shouldIndex) {
@@ -408,7 +405,7 @@ ${COLORS.yellow}To enable semantic search, you need API keys for:${COLORS.reset}
       }
     }
   } else {
-    log('You can add API keys later by editing .env.local', 'yellow')
+    log('You can add the Pinecone API key later by editing .env.local', 'yellow')
   }
 
   // Step 6: Complete

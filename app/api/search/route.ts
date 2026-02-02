@@ -32,13 +32,6 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    if (error.message?.includes('OPENAI_API_KEY')) {
-      return NextResponse.json(
-        { error: 'OpenAI is not configured. Please run npm run setup.' },
-        { status: 503 }
-      )
-    }
-
     return NextResponse.json(
       { error: 'Search failed. Please try again.' },
       { status: 500 }

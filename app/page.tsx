@@ -8,8 +8,6 @@ function isConfigured() {
     process.env.DRUPAL_BASE_URL || process.env.NEXT_PUBLIC_DRUPAL_BASE_URL
   ) && !!(
     process.env.PINECONE_API_KEY
-  ) && !!(
-    process.env.OPENAI_API_KEY
   )
 }
 
