@@ -1,0 +1,212 @@
+{
+  "model": [
+    {
+      "bundle": "article",
+      "label": "Article",
+      "description": "Searchable articles for the knowledge base",
+      "body": true,
+      "fields": [
+        {
+          "id": "summary",
+          "label": "Summary",
+          "type": "text",
+          "description": "Brief summary of the article"
+        },
+        {
+          "id": "category",
+          "label": "Category",
+          "type": "string",
+          "description": "Article category"
+        },
+        {
+          "id": "tags",
+          "label": "Tags",
+          "type": "string",
+          "description": "Comma-separated tags"
+        },
+        {
+          "id": "image",
+          "label": "Featured Image",
+          "type": "image"
+        },
+        {
+          "id": "read_time",
+          "label": "Read Time",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "content": [
+    {
+      "type": "node.article",
+      "id": "article-1",
+      "path": "/articles/getting-started-nextjs",
+      "values": {
+        "title": "Getting Started with Next.js: A Complete Beginner's Guide",
+        "body": "<p>Next.js has become one of the most popular React frameworks for building modern web applications. In this comprehensive guide, we'll walk through everything you need to know to get started.</p><h2>What is Next.js?</h2><p>Next.js is a React framework that provides a great developer experience with features like server-side rendering, static site generation, file-based routing, and API routes built in. It was created by Vercel and has gained massive adoption in the web development community.</p><h2>Setting Up Your First Project</h2><p>To create a new Next.js project, you can use the create-next-app command. This sets up everything automatically, including TypeScript support, ESLint, and Tailwind CSS if you choose those options.</p><h2>Understanding File-Based Routing</h2><p>One of the most powerful features of Next.js is its file-based routing system. Simply create files in the app directory, and Next.js automatically creates routes for them. This eliminates the need for complex routing configuration.</p><h2>Server Components vs Client Components</h2><p>Next.js 13+ introduced React Server Components by default. Server components render on the server and can directly access databases and APIs without exposing credentials to the client. Use the 'use client' directive when you need interactivity.</p>",
+        "summary": "Learn the fundamentals of Next.js, from project setup to understanding server components and file-based routing.",
+        "category": "Development",
+        "tags": "nextjs, react, javascript, web development, tutorial",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=630&fit=crop",
+          "alt": "Next.js code on screen"
+        },
+        "read_time": "8 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-2",
+      "path": "/articles/understanding-vector-databases",
+      "values": {
+        "title": "Understanding Vector Databases: The Foundation of Modern AI Search",
+        "body": "<p>Vector databases have become essential infrastructure for AI applications. They enable semantic search, recommendation systems, and similarity matching at scale.</p><h2>What are Vector Embeddings?</h2><p>Vector embeddings are numerical representations of data that capture semantic meaning. When you convert text, images, or other content into vectors, similar items end up close together in the vector space. This allows for semantic similarity search rather than just keyword matching.</p><h2>Popular Vector Databases</h2><p>Several vector databases have emerged to handle the unique requirements of vector search. Pinecone offers a fully managed solution with excellent performance. Weaviate provides an open-source option with GraphQL support. Milvus is another popular choice for self-hosted deployments.</p><h2>Use Cases</h2><p>Vector databases power many modern AI applications: semantic search engines that understand user intent, recommendation systems that find similar products, RAG (Retrieval Augmented Generation) systems that give LLMs context, and duplicate detection for content moderation.</p><h2>Getting Started with Pinecone</h2><p>Pinecone makes it easy to get started with vector search. Create an index, generate embeddings using OpenAI or another provider, upsert your vectors, and query for similar items. The API is straightforward and scales automatically.</p>",
+        "summary": "Explore how vector databases enable semantic search and power modern AI applications like ChatGPT plugins and recommendation systems.",
+        "category": "AI & Machine Learning",
+        "tags": "vector database, pinecone, embeddings, ai, semantic search",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop",
+          "alt": "Data visualization"
+        },
+        "read_time": "6 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-3",
+      "path": "/articles/drupal-headless-cms",
+      "values": {
+        "title": "Why Drupal Makes an Excellent Headless CMS",
+        "body": "<p>Drupal has evolved from a traditional CMS into a powerful headless content platform. Here's why it's an excellent choice for decoupled architectures.</p><h2>Content Modeling Flexibility</h2><p>Drupal's entity system provides unmatched flexibility for content modeling. You can create complex content types with relationships, paragraphs for flexible layouts, and taxonomies for organization. This structured content translates perfectly to APIs.</p><h2>Robust API Support</h2><p>Drupal provides both JSON:API and GraphQL out of the box. JSON:API follows the specification perfectly, while GraphQL offers flexible querying. Both options support filtering, pagination, and includes for related content.</p><h2>Enterprise-Ready Features</h2><p>For enterprise applications, Drupal offers granular permissions, revision history, content workflows, and multi-language support. These features work seamlessly in headless mode, giving content teams powerful tools while developers build modern frontends.</p><h2>The Decoupled Ecosystem</h2><p>Platforms like Decoupled.io make it easy to spin up Drupal instances configured for headless use. Combined with Next.js, Nuxt, or other frameworks, you get the best of both worlds: powerful content management and modern frontend development.</p>",
+        "summary": "Discover why Drupal's flexibility, API support, and enterprise features make it an ideal headless CMS for modern web development.",
+        "category": "CMS",
+        "tags": "drupal, headless cms, api, content management, decoupled",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop",
+          "alt": "Content management dashboard"
+        },
+        "read_time": "5 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-4",
+      "path": "/articles/typescript-best-practices",
+      "values": {
+        "title": "TypeScript Best Practices for Large Applications",
+        "body": "<p>TypeScript has become the standard for large-scale JavaScript applications. Here are best practices to get the most out of it.</p><h2>Strict Mode is Your Friend</h2><p>Enable strict mode in your tsconfig.json from the start. This catches more errors at compile time, including null checks, implicit any types, and unused variables. The initial overhead pays off in reduced runtime errors.</p><h2>Use Type Inference Wisely</h2><p>TypeScript's type inference is powerful. Don't over-annotate obvious types like const count = 0. However, do explicitly type function parameters and return values, as this serves as documentation and catches errors at function boundaries.</p><h2>Leverage Utility Types</h2><p>TypeScript includes utility types like Partial, Required, Pick, and Omit. Learn these well. Partial<User> is cleaner than redefining every property as optional. ReturnType and Parameters help derive types from existing functions.</p><h2>Organize Types Properly</h2><p>For large projects, organize types in dedicated files or a types directory. Export interfaces from where they're used, and create a shared types package for monorepos. Avoid the any type except for truly dynamic scenarios.</p>",
+        "summary": "Master TypeScript with these battle-tested best practices for building maintainable, type-safe applications at scale.",
+        "category": "Development",
+        "tags": "typescript, javascript, best practices, programming, types",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&h=630&fit=crop",
+          "alt": "Code editor with TypeScript"
+        },
+        "read_time": "7 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-5",
+      "path": "/articles/building-search-experiences",
+      "values": {
+        "title": "Building Great Search Experiences: UX Patterns and Best Practices",
+        "body": "<p>Search is often the primary way users navigate large content collections. Here's how to build search experiences that delight users.</p><h2>Instant Results</h2><p>Users expect results as they type. Implement debounced search that shows results within 100-200ms of the user stopping typing. Show loading states to indicate the search is working, but avoid flickering by delaying the loading indicator for very fast responses.</p><h2>Relevant Results</h2><p>Good search goes beyond keyword matching. Use semantic search to understand user intent. If someone searches for 'JS framework', they probably want results about React, Vue, and Angular, not just pages containing those exact words.</p><h2>Clear Result Presentation</h2><p>Each search result should clearly show why it matched. Highlight the matching terms, show relevant snippets, and include metadata like category, date, or author. Use visual hierarchy to make scanning results easy.</p><h2>Empty States and Suggestions</h2><p>When there are no results, don't just show 'No results found.' Suggest alternative searches, show popular content, or explain what might help. For typos, offer 'Did you mean?' suggestions automatically.</p>",
+        "summary": "Learn UX patterns for building search interfaces that help users find exactly what they're looking for quickly and easily.",
+        "category": "UX Design",
+        "tags": "search, ux, user experience, design patterns, interface",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&h=630&fit=crop",
+          "alt": "Search interface design"
+        },
+        "read_time": "6 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-6",
+      "path": "/articles/react-server-components",
+      "values": {
+        "title": "React Server Components: A Deep Dive",
+        "body": "<p>React Server Components represent a paradigm shift in how we build React applications. Let's explore what they are and how to use them effectively.</p><h2>The Problem They Solve</h2><p>Traditional React apps ship JavaScript to the client for every component. This increases bundle size and means users wait for hydration before the page becomes interactive. Server Components render on the server and send HTML, dramatically reducing JavaScript sent to the client.</p><h2>How They Work</h2><p>Server Components run only on the server. They can directly access databases, read files, and use server-only APIs. The rendered output is streamed to the client as HTML. Because they never run on the client, they have zero impact on bundle size.</p><h2>When to Use Client Components</h2><p>Use the 'use client' directive when you need interactivity: onClick handlers, useState, useEffect, browser APIs, or third-party libraries that use these. Client components can import server components, but not vice versa.</p><h2>Composition Patterns</h2><p>The best pattern is to keep most components as server components and push client components to the leaves of your component tree. Pass server-rendered content as children to client components for optimal performance.</p>",
+        "summary": "Understand React Server Components, when to use them vs client components, and patterns for optimal performance.",
+        "category": "Development",
+        "tags": "react, server components, nextjs, javascript, performance",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=1200&h=630&fit=crop",
+          "alt": "React code visualization"
+        },
+        "read_time": "8 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-7",
+      "path": "/articles/graphql-vs-rest",
+      "values": {
+        "title": "GraphQL vs REST: Choosing the Right API Style",
+        "body": "<p>Both GraphQL and REST are valid approaches for building APIs. Understanding their tradeoffs helps you choose the right one for your project.</p><h2>REST: Simple and Proven</h2><p>REST uses standard HTTP methods (GET, POST, PUT, DELETE) and URLs to represent resources. It's simple, cacheable, and well-understood. For CRUD operations on well-defined resources, REST is often the simplest choice.</p><h2>GraphQL: Flexible Queries</h2><p>GraphQL lets clients request exactly the data they need in a single request. No more over-fetching unnecessary fields or under-fetching and making multiple requests. The schema provides automatic documentation and type safety.</p><h2>When to Choose GraphQL</h2><p>GraphQL shines when clients have varying data needs, when you want to reduce the number of requests, or when you need real-time subscriptions. It's particularly good for mobile apps where bandwidth matters and for complex UIs that aggregate data.</p><h2>When to Choose REST</h2><p>REST is great for simple CRUD APIs, when you need HTTP caching, for public APIs where simplicity matters, or when your team is more familiar with REST patterns. Many successful applications use both: REST for simple operations, GraphQL for complex queries.</p>",
+        "summary": "Compare GraphQL and REST APIs to understand when each approach is the better choice for your application.",
+        "category": "Architecture",
+        "tags": "graphql, rest, api, architecture, backend",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=630&fit=crop",
+          "alt": "API architecture diagram"
+        },
+        "read_time": "5 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-8",
+      "path": "/articles/tailwind-css-patterns",
+      "values": {
+        "title": "Tailwind CSS Patterns for Scalable Design Systems",
+        "body": "<p>Tailwind CSS has revolutionized how we style web applications. Here are patterns for building scalable design systems with Tailwind.</p><h2>Component Extraction</h2><p>Don't repeat utility classes everywhere. Extract common patterns into components. A Button component encapsulates its styles, making changes easy and ensuring consistency. Use React, Vue, or your framework's component model.</p><h2>Custom Design Tokens</h2><p>Extend Tailwind's theme in tailwind.config.js with your brand colors, spacing scale, and typography. Use semantic names like 'primary' and 'secondary' rather than specific colors. This makes rebranding straightforward.</p><h2>Responsive Design</h2><p>Tailwind's responsive prefixes (sm:, md:, lg:) make mobile-first design intuitive. Start with mobile styles, then add larger breakpoint overrides. Use container queries with @container for component-level responsiveness.</p><h2>Dark Mode</h2><p>Implement dark mode with Tailwind's dark: variant. Define both light and dark colors in your theme, then toggle with a class on the html element. Use CSS custom properties for complex color schemes that need to change together.</p>",
+        "summary": "Learn patterns for building maintainable design systems with Tailwind CSS, from component extraction to theming.",
+        "category": "CSS",
+        "tags": "tailwind, css, design systems, styling, frontend",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=1200&h=630&fit=crop",
+          "alt": "CSS styling code"
+        },
+        "read_time": "6 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-9",
+      "path": "/articles/authentication-patterns",
+      "values": {
+        "title": "Modern Authentication Patterns for Web Applications",
+        "body": "<p>Authentication is a critical part of any web application. Let's explore modern patterns that balance security and user experience.</p><h2>Session-Based Authentication</h2><p>Traditional sessions store user state on the server. After login, a session ID cookie identifies the user on subsequent requests. This works well for server-rendered apps and provides easy revocation - just delete the session.</p><h2>JWT (JSON Web Tokens)</h2><p>JWTs are self-contained tokens that can be verified without database lookups. They're great for stateless APIs and microservices. However, they can't be easily revoked and require careful handling of refresh tokens.</p><h2>OAuth 2.0 and OpenID Connect</h2><p>For 'Login with Google/GitHub' functionality, OAuth 2.0 delegates authentication to trusted providers. OpenID Connect adds identity information on top. Libraries like NextAuth.js make implementation straightforward.</p><h2>Passwordless Authentication</h2><p>Magic links and passkeys eliminate password problems entirely. Users click a link sent to their email or use biometrics. This is more secure than passwords and often provides better UX. WebAuthn enables passkey support in browsers.</p>",
+        "summary": "Explore modern authentication approaches including sessions, JWTs, OAuth, and passwordless options for secure web apps.",
+        "category": "Security",
+        "tags": "authentication, security, jwt, oauth, web development",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200&h=630&fit=crop",
+          "alt": "Security lock visualization"
+        },
+        "read_time": "7 min read"
+      }
+    },
+    {
+      "type": "node.article",
+      "id": "article-10",
+      "path": "/articles/database-optimization",
+      "values": {
+        "title": "Database Query Optimization: From Slow to Lightning Fast",
+        "body": "<p>Slow database queries are often the biggest performance bottleneck. Here's how to identify and fix them.</p><h2>Use EXPLAIN</h2><p>Every database has an EXPLAIN command that shows how queries are executed. Look for full table scans, missing indexes, and inefficient joins. PostgreSQL's EXPLAIN ANALYZE shows actual execution times.</p><h2>Index Strategically</h2><p>Indexes speed up reads but slow down writes. Index columns used in WHERE clauses, JOINs, and ORDER BY. Compound indexes matter - an index on (user_id, created_at) helps queries filtering by both but not queries filtering only by created_at.</p><h2>Avoid N+1 Queries</h2><p>The N+1 problem occurs when you query for a list, then make additional queries for each item. Use eager loading (JOINs or includes) to fetch related data in one query. ORMs often have this built in.</p><h2>Consider Denormalization</h2><p>Sometimes the fastest query is one you don't have to make. Storing computed values, duplicating data for read optimization, or using materialized views can dramatically improve read performance. Just handle the consistency implications.</p>",
+        "summary": "Learn practical techniques for identifying and fixing slow database queries, from proper indexing to query optimization.",
+        "category": "Database",
+        "tags": "database, sql, performance, optimization, queries",
+        "image": {
+          "uri": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&h=630&fit=crop",
+          "alt": "Database visualization"
+        },
+        "read_time": "6 min read"
+      }
+    }
+  ]
+}
