@@ -52,7 +52,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Back Link */}
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-sky-400 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to search
@@ -61,16 +61,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Article Header */}
           <header className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-sky-900/50 text-sky-300">
                 {article.category}
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               {article.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-4 h-4" />
                 {publishDate}
@@ -103,8 +103,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Summary */}
           {article.summary && (
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 mb-8">
-              <p className="text-lg text-slate-700 dark:text-slate-300 italic">
+            <div className="bg-slate-800/50 rounded-xl p-6 mb-8">
+              <p className="text-lg text-slate-300 italic">
                 {article.summary}
               </p>
             </div>
@@ -112,21 +112,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Article Body */}
           <div
-            className="prose prose-slate dark:prose-invert prose-lg max-w-none prose-headings:font-semibold prose-a:text-sky-600 dark:prose-a:text-sky-400 prose-img:rounded-xl"
+            className="prose prose-invert prose-lg max-w-none prose-headings:font-semibold prose-a:text-sky-400 prose-img:rounded-xl"
             dangerouslySetInnerHTML={{ __html: article.body }}
           />
 
           {/* Tags Footer */}
           {article.tags.length > 0 && (
-            <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
-              <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
+            <footer className="mt-12 pt-8 border-t border-slate-700">
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-3">
                 Related Topics
               </h3>
               <div className="flex flex-wrap gap-2">
                 {article.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg text-sm"
+                    className="px-3 py-1.5 bg-slate-800 text-slate-300 rounded-lg text-sm"
                   >
                     {tag}
                   </span>

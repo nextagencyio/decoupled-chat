@@ -43,14 +43,14 @@ export default function SearchInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="search-input w-full pl-12 pr-12 py-4 text-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 transition-shadow"
+        className="search-input w-full pl-12 pr-12 py-4 text-lg bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 transition-shadow"
       />
       {value && (
         <button
           onClick={onClear}
           className="absolute inset-y-0 right-0 pr-4 flex items-center"
         >
-          <X className="w-5 h-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" />
+          <X className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors" />
         </button>
       )}
     </div>

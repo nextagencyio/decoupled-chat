@@ -72,10 +72,10 @@ export default function SearchResults() {
     <div className="max-w-3xl mx-auto">
       {/* Hero Section */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
           Search Our Knowledge Base
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-300">
+        <p className="text-lg text-slate-300">
           Ask questions naturally. Our AI-powered search understands what you mean, not just what you type.
         </p>
       </div>
@@ -93,28 +93,28 @@ export default function SearchResults() {
 
       {/* Results or Empty State */}
       {state.error ? (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center">
+        <div className="bg-red-900/20 border border-red-800 rounded-xl p-6 text-center">
           <AlertCircle className="w-10 h-10 text-red-500 mx-auto mb-3" />
-          <h3 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">
+          <h3 className="text-lg font-semibold text-red-200 mb-2">
             Search Error
           </h3>
-          <p className="text-red-600 dark:text-red-300">{state.error}</p>
+          <p className="text-red-300">{state.error}</p>
         </div>
       ) : state.hasSearched && state.results.length === 0 ? (
-        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-8 text-center">
-          <Search className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-2">
+        <div className="bg-slate-800/50 rounded-xl p-8 text-center">
+          <Search className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-slate-300 mb-2">
             No results found
           </h3>
-          <p className="text-slate-500 dark:text-slate-400">
+          <p className="text-slate-400">
             Try different keywords or check your spelling.
           </p>
         </div>
       ) : state.results.length > 0 ? (
         <div>
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              Found <span className="font-semibold text-slate-700 dark:text-slate-200">{state.results.length}</span> results for "{query}"
+            <p className="text-sm text-slate-400">
+              Found <span className="font-semibold text-slate-200">{state.results.length}</span> results for "{query}"
             </p>
           </div>
           <div className="space-y-4">
@@ -128,16 +128,16 @@ export default function SearchResults() {
           </div>
         </div>
       ) : !state.hasSearched ? (
-        <div className="bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-900/20 dark:to-blue-900/20 rounded-xl p-8">
+        <div className="bg-gradient-to-br from-sky-900/20 to-blue-900/20 rounded-xl p-8">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-sky-100 dark:bg-sky-900/50 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Sparkles className="w-6 h-6 text-sky-600 dark:text-sky-400" />
+            <div className="w-12 h-12 bg-sky-900/50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-6 h-6 text-sky-400" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+              <h3 className="text-lg font-semibold text-white mb-2">
                 Semantic Search Powered by AI
               </h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-4">
+              <p className="text-slate-300 mb-4">
                 This search uses vector embeddings to understand the meaning of your query, not just match keywords. Try asking questions naturally!
               </p>
               <div className="flex flex-wrap gap-2">
@@ -150,7 +150,7 @@ export default function SearchResults() {
                   <button
                     key={suggestion}
                     onClick={() => setQuery(suggestion)}
-                    className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:border-sky-300 dark:hover:border-sky-600 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+                    className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-300 hover:border-sky-600 hover:text-sky-400 transition-colors"
                   >
                     {suggestion}
                   </button>
