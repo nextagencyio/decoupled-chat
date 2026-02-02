@@ -1,0 +1,64 @@
+{
+  "articles": [
+    {
+      "id": "1",
+      "title": "Getting Started with Decoupled Drupal",
+      "slug": "getting-started-decoupled-drupal",
+      "body": "Learn how to set up a decoupled Drupal architecture with Next.js frontend...",
+      "summary": "A comprehensive guide to building modern web applications with Drupal as a headless CMS and Next.js as the frontend framework.",
+      "category": "Getting Started",
+      "tags": ["drupal", "nextjs", "tutorial"],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop",
+        "alt": "Code on screen"
+      },
+      "readTime": "8 min read",
+      "publishedAt": "2024-01-15"
+    },
+    {
+      "id": "2",
+      "title": "GraphQL API Best Practices",
+      "slug": "graphql-api-best-practices",
+      "body": "Discover the best practices for designing and consuming GraphQL APIs...",
+      "summary": "Learn how to efficiently fetch data using GraphQL, including query optimization, caching strategies, and error handling.",
+      "category": "API Development",
+      "tags": ["graphql", "api", "performance"],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop",
+        "alt": "API visualization"
+      },
+      "readTime": "6 min read",
+      "publishedAt": "2024-01-10"
+    },
+    {
+      "id": "3",
+      "title": "Building AI-Powered Search",
+      "slug": "building-ai-powered-search",
+      "body": "Implement semantic search using vector embeddings and Pinecone...",
+      "summary": "A step-by-step guide to adding intelligent search capabilities to your application using AI embeddings and vector databases.",
+      "category": "AI & Search",
+      "tags": ["ai", "search", "pinecone", "embeddings"],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&fit=crop",
+        "alt": "AI visualization"
+      },
+      "readTime": "10 min read",
+      "publishedAt": "2024-01-08"
+    },
+    {
+      "id": "4",
+      "title": "Performance Optimization Tips",
+      "slug": "performance-optimization-tips",
+      "body": "Optimize your Next.js application for maximum performance...",
+      "summary": "Essential techniques for improving page load times, reducing bundle sizes, and implementing effective caching strategies.",
+      "category": "Performance",
+      "tags": ["performance", "optimization", "nextjs"],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop",
+        "alt": "Performance dashboard"
+      },
+      "readTime": "7 min read",
+      "publishedAt": "2024-01-05"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Groq from 'groq-sdk'
 import { searchArticles } from '@/lib/pinecone'
 import type { Article } from '@/lib/types'
+import { isDemoMode, generateDemoResponse } from '@/lib/demo-mode'
 
 const GROQ_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
 
@@ -69,6 +70,20 @@ export async function POST(request: NextRequest) {
         { error: 'Messages array is required' },
         { status: 400 }
       )
+    }
+
+    // Demo mode - return mock responses (remove this block for production-only builds)
+    if (isDemoMode()) {
+      const lastMessage = messages[messages.length - 1]
+      const demoResponse = generateDemoResponse(lastMessage?.content || '')
+      return NextResponse.json({
+        message: demoResponse.message,
+        sources: demoResponse.sources,
+      }, {
+        headers: {
+          'X-Demo-Mode': 'true',
+        },
+      })
     }
 
     if (!process.env.GROQ_API_KEY) {
