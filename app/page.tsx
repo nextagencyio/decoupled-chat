@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { MessageSquare, Sparkles, FileText, AlertCircle, Trash2 } from 'lucide-react'
+import { MessageSquare, Sparkles, FileText, AlertCircle, Trash2, X } from 'lucide-react'
 import { ChatMessage } from './components/ChatMessage'
 import { SourceCard } from './components/SourceCard'
 import { ChatInput } from './components/ChatInput'
@@ -56,6 +56,7 @@ export default function ChatPage() {
   const [error, setError] = useState<string | null>(null)
   const [isConfigured, setIsConfigured] = useState<boolean | null>(null)
   const [isHydrated, setIsHydrated] = useState(false)
+  const [showMobileSources, setShowMobileSources] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
 
@@ -86,6 +87,8 @@ export default function ChatPage() {
   const handleShowSources = useCallback((messageId: string, sources: Article[]) => {
     setCurrentSources(sources)
     setActiveSourceMessageId(messageId)
+    // Open mobile sources modal on small screens
+    setShowMobileSources(true)
   }, [])
 
   // Check if the app is configured (lightweight check)
@@ -308,7 +311,7 @@ export default function ChatPage() {
           </div>
         </div>
 
-        {/* Sources sidebar */}
+        {/* Sources sidebar - desktop */}
         <aside className="hidden lg:flex flex-col w-80 xl:w-96 border-l border-gray-800 bg-gray-900/50">
           <div className="flex-shrink-0 p-4 border-b border-gray-800">
             <div className="flex items-center gap-2 text-gray-400">
@@ -338,6 +341,37 @@ export default function ChatPage() {
           </div>
         </aside>
       </div>
+
+      {/* Mobile sources modal */}
+      {showMobileSources && currentSources.length > 0 && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm">
+          <div className="absolute inset-x-0 bottom-0 max-h-[80vh] bg-gray-900 rounded-t-2xl border-t border-gray-700 overflow-hidden flex flex-col">
+            {/* Modal header */}
+            <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-800">
+              <div className="flex items-center gap-2 text-white">
+                <FileText className="w-4 h-4" />
+                <span className="font-medium">Sources</span>
+                <span className="text-xs bg-sky-500/20 text-sky-400 px-2 py-0.5 rounded-full">
+                  {currentSources.length}
+                </span>
+              </div>
+              <button
+                onClick={() => setShowMobileSources(false)}
+                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal content */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {currentSources.map((article, index) => (
+                <SourceCard key={article.id} article={article} index={index} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
