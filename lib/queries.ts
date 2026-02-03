@@ -14,17 +14,17 @@ export const GET_ALL_ARTICLES = gql`
         body {
           processed
         }
-        summary {
-          value
+        summary
+        author
+        tags {
+          __typename
+          ... on TermInterface {
+            name
+          }
         }
-        category
-        tags
-        readTime
-        image {
+        featuredImage {
           url
           alt
-          width
-          height
         }
       }
     }
@@ -46,17 +46,17 @@ export const GET_ARTICLE_BY_SLUG = gql`
             body {
               processed
             }
-            summary {
-              value
+            summary
+            author
+            tags {
+              __typename
+              ... on TermInterface {
+                name
+              }
             }
-            category
-            tags
-            readTime
-            image {
+            featuredImage {
               url
               alt
-              width
-              height
             }
           }
         }
@@ -75,16 +75,14 @@ export function transformArticle(node: any): Article | null {
     title: node.title,
     slug,
     body: node.body?.processed || '',
-    summary: node.summary?.value || '',
-    category: node.category || 'General',
-    tags: node.tags ? node.tags.split(',').map((t: string) => t.trim()) : [],
-    readTime: node.readTime || '5 min read',
+    summary: node.summary || '',
+    category: 'General',
+    tags: node.tags ? node.tags.map((t: any) => t.name).filter(Boolean) : [],
+    readTime: '5 min read',
     publishedAt: node.created?.time || new Date().toISOString(),
-    image: node.image ? {
-      url: node.image.url,
-      alt: node.image.alt || node.title,
-      width: node.image.width || 1200,
-      height: node.image.height || 630,
+    image: node.featuredImage ? {
+      url: node.featuredImage.url,
+      alt: node.featuredImage.alt || node.title,
     } : undefined,
   }
 }

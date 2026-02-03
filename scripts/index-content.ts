@@ -109,13 +109,15 @@ async function fetchArticles(): Promise<Article[]> {
           body {
             processed
           }
-          summary {
-            value
+          summary
+          author
+          tags {
+            __typename
+            ... on TermInterface {
+              name
+            }
           }
-          category
-          tags
-          readTime
-          image {
+          featuredImage {
             url
             alt
           }
@@ -145,20 +147,26 @@ async function fetchArticles(): Promise<Article[]> {
 
   const nodes = data.data?.nodeArticles?.nodes || []
 
-  return nodes.map((node: any) => ({
+  // Filter out AI-generated images (old articles), only keep Unsplash images
+  const filteredNodes = nodes.filter((node: any) => {
+    const imageUrl = node.featuredImage?.url || ''
+    return !imageUrl.includes('ai-generated')
+  })
+
+  return filteredNodes.map((node: any) => ({
     id: node.id,
     title: node.title,
     slug: node.path?.replace(/^\/articles\//, '') || node.id,
     body: node.body?.processed || '',
-    summary: node.summary?.value || '',
-    category: node.category || 'General',
-    tags: node.tags ? node.tags.split(',').map((t: string) => t.trim()) : [],
-    readTime: node.readTime || '5 min read',
+    summary: node.summary || '',
+    category: 'General',
+    tags: node.tags ? node.tags.map((t: any) => t.name) : [],
+    readTime: '5 min read',
     publishedAt: node.created?.time || new Date().toISOString(),
-    image: node.image
+    image: node.featuredImage
       ? {
-          url: node.image.url,
-          alt: node.image.alt || node.title,
+          url: node.featuredImage.url,
+          alt: node.featuredImage.alt || node.title,
         }
       : undefined,
   }))
