@@ -6,7 +6,17 @@ import { ChatMessage } from './components/ChatMessage'
 import { SourceCard } from './components/SourceCard'
 import { ChatInput } from './components/ChatInput'
 import { SetupGuide } from './components/SetupGuide'
+import { AlmostThere } from './components/AlmostThere'
 import type { ChatMessage as ChatMessageType, Article } from '@/lib/types'
+
+interface ConfigStatus {
+  configured: boolean
+  services?: {
+    drupal: boolean
+    groq: boolean
+    pinecone: boolean
+  }
+}
 
 const STORAGE_KEY = 'decoupled-chat-state'
 
@@ -54,7 +64,7 @@ export default function ChatPage() {
   const [activeSourceMessageId, setActiveSourceMessageId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [isConfigured, setIsConfigured] = useState<boolean | null>(null)
+  const [configStatus, setConfigStatus] = useState<ConfigStatus | null>(null)
   const [isHydrated, setIsHydrated] = useState(false)
   const [showMobileSources, setShowMobileSources] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -97,17 +107,17 @@ export default function ChatPage() {
 
     const checkConfig = async () => {
       try {
-        // Use a HEAD-like check or a dedicated config endpoint
         const res = await fetch('/api/config', {
           method: 'GET',
         })
+        const data = await res.json()
         if (mounted) {
-          setIsConfigured(res.ok)
+          setConfigStatus(data)
         }
       } catch {
         if (mounted) {
           // If config endpoint doesn't exist, assume configured
-          setIsConfigured(true)
+          setConfigStatus({ configured: true })
         }
       }
     }
@@ -196,18 +206,28 @@ export default function ChatPage() {
     }
   }, [messages])
 
-  // Show setup guide if not configured
-  if (isConfigured === false) {
-    return <SetupGuide />
-  }
-
   // Show loading state while checking config
-  if (isConfigured === null) {
+  if (configStatus === null) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-black flex items-center justify-center">
         <div className="animate-pulse text-gray-400">Loading...</div>
       </div>
     )
+  }
+
+  // Show "Almost There" if Drupal is configured but API keys are missing
+  if (!configStatus.configured && configStatus.services?.drupal) {
+    return (
+      <AlmostThere
+        hasPinecone={configStatus.services.pinecone}
+        hasGroq={configStatus.services.groq}
+      />
+    )
+  }
+
+  // Show full setup guide if nothing is configured
+  if (!configStatus.configured) {
+    return <SetupGuide />
   }
 
   return (

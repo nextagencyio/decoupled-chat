@@ -8,15 +8,26 @@ export async function GET() {
     return NextResponse.json({ configured: true, demoMode: true })
   }
 
-  const isConfigured = !!(
-    process.env.GROQ_API_KEY &&
-    process.env.PINECONE_API_KEY &&
-    process.env.DRUPAL_BASE_URL
+  const hasDrupal = !!(
+    process.env.DRUPAL_BASE_URL &&
+    process.env.DRUPAL_CLIENT_ID &&
+    process.env.DRUPAL_CLIENT_SECRET
   )
+  const hasGroq = !!process.env.GROQ_API_KEY
+  const hasPinecone = !!process.env.PINECONE_API_KEY
 
-  if (!isConfigured) {
+  const isFullyConfigured = hasDrupal && hasGroq && hasPinecone
+
+  if (!isFullyConfigured) {
     return NextResponse.json(
-      { configured: false },
+      {
+        configured: false,
+        services: {
+          drupal: hasDrupal,
+          groq: hasGroq,
+          pinecone: hasPinecone,
+        },
+      },
       { status: 503 }
     )
   }
