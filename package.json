@@ -10,7 +10,8 @@
     "setup": "tsx scripts/setup.ts",
     "setup-content": "npx decoupled-cli@latest content import data/chat-content.json",
     "index": "tsx scripts/index-content.ts",
-    "index:reset": "tsx scripts/index-content.ts --reset"
+    "index:reset": "tsx scripts/index-content.ts --reset",
+    "build:cloudflare": "opennextjs-cloudflare build"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -27,6 +28,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.17.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -36,6 +38,7 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.20.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.71.0"
   }
 }
